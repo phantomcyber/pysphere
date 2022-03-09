@@ -3,12 +3,11 @@
 '''Simple CGI dispatching.
 '''
 
-from pysphere.ZSI import TC
+from pysphere.ZSI import *
+from pysphere.ZSI import _copyright
 import base64, os
 
-from pysphere.ZSI import ZSI_SCHEMA_URI
-
-_b64_decode = base64.decodestring
+_b64_decode = base64.decodebytes
 
 # Typecode to parse a ZSI BasicAuth header.
 _auth_tc = TC.Struct(None,
@@ -62,3 +61,5 @@ class ClientBinding:
         '''Return the ParsedSoap request.
         '''
         return self.ps
+
+if __name__ == '__main__': print(_copyright)

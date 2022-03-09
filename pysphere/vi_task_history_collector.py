@@ -30,6 +30,7 @@
 from pysphere import VIProperty, VITask, VIMor
 from pysphere.resources import VimService_services as VI
 from pysphere import VIException, VIApiException, FaultTypes
+from pysphere.vi_history_collector import VIHistoryCollector
 
 class Recursion:
     ALL      = "all"
@@ -42,7 +43,7 @@ class States:
     RUNNING = "running"
     SUCCESS = "success"
 
-class VITaskHistoryCollector(object):
+class VITaskHistoryCollector(VIHistoryCollector):
     """
     TaskHistoryCollector provides a mechanism for retrieving historical data and 
     updates when the server appends new tasks.
@@ -63,10 +64,9 @@ class VITaskHistoryCollector(object):
           states. Should be a list or one of 'queued', 'running', 'error', or
           'success'  
         """
-        
-        self._server = server
-        self._mor = None
-        
+
+        super(VITaskHistoryCollector, self).__init__(server)
+
         if entity and not VIMor.is_mor(entity):
             raise VIException("Entity should be a MOR object",
                               FaultTypes.PARAMETER_ERROR)
@@ -102,7 +102,7 @@ class VITaskHistoryCollector(object):
             request.set_element_filter(_filter)
             resp = server._proxy.CreateCollectorForTasks(request)._returnval
         
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
         
         self._mor = resp
@@ -170,7 +170,7 @@ class VITaskHistoryCollector(object):
             for task in resp:
                 ret.append(VITask(task.Task, self._server))
         
-        except (VI.ZSI.FaultException), e:
+        except (VI.ZSI.FaultException) as e:
             raise VIApiException(e)
         
         return ret
