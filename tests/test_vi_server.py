@@ -1,6 +1,6 @@
 import os
 import random
-import ConfigParser
+import configparser as ConfigParser
 from unittest import TestCase
 
 from pysphere import VIServer, VIProperty, MORTypes, VIException, FaultTypes, \
@@ -170,7 +170,7 @@ class VIServerTest(TestCase):
     def test_unexistent_vm_path(self):
         try:
             self.server.get_vm_by_path("zaraza")
-        except VIException, e:
+        except VIException as e:
             assert e.fault == FaultTypes.OBJECT_NOT_FOUND
         else:
             assert False
@@ -193,7 +193,7 @@ class VIServerTest(TestCase):
             path = random.choice(vms)
             try:
                 self.server.get_vm_by_path(path, datacenter=dc2)
-            except VIException, e:
+            except VIException as e:
                 assert e.fault == FaultTypes.OBJECT_NOT_FOUND
             else:
                 raise AssertionError("VM shouldn't be found")

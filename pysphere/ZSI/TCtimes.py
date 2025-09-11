@@ -238,10 +238,10 @@ class gDateTime(Gregorian):
     '''A date and time.
     '''
     parselist = [ (None,'dateTime') ]
-    lex_pattern = re.compile('^' r'(?P<neg>-?)' \
-                        '(?P<Y>\d{4,})-' r'(?P<M>\d\d)-' r'(?P<D>\d\d)' 'T' \
-                        r'(?P<h>\d\d):' r'(?P<m>\d\d):' r'(?P<s>\d*(\.\d+)?)' \
-                        r'(?P<tz>(Z|([-+]\d\d:\d\d))?)' '$')
+    lex_pattern = re.compile(r'^(?P<neg>-?)' \
+                        r'(?P<Y>\d{4,})-(?P<M>\d\d)-(?P<D>\d\d)T' \
+                        r'(?P<h>\d\d):(?P<m>\d\d):(?P<s>\d*(\.\d+)?)' \
+                        r'(?P<tz>(Z|([-+]\d\d:\d\d))?)$')
     tag, format = 'dateTime', '%(Y)04d-%(M)02d-%(D)02dT%(h)02d:%(m)02d:%(s)02dZ'
     format_ms = format[:-1] + '.%(ms)03dZ'
     type = (SCHEMA.XSD3, 'dateTime')
@@ -250,9 +250,9 @@ class gDate(Gregorian):
     '''A date.
     '''
     parselist = [ (None,'date') ]
-    lex_pattern = re.compile('^' r'(?P<neg>-?)' \
-                        '(?P<Y>\d{4,})-' r'(?P<M>\d\d)-' r'(?P<D>\d\d)' \
-                        r'(?P<tz>Z|([-+]\d\d:\d\d))?' '$')
+    lex_pattern = re.compile(r'^(?P<neg>-?)' \
+                        r'(?P<Y>\d{4,})-(?P<M>\d\d)-(?P<D>\d\d)' \
+                        r'(?P<tz>Z|([-+]\d\d:\d\d))?$')
     tag, format = 'date', '%(Y)04d-%(M)02d-%(D)02dZ'
     type = (SCHEMA.XSD3, 'date')
 
@@ -260,9 +260,9 @@ class gYearMonth(Gregorian):
     '''A date.
     '''
     parselist = [ (None,'gYearMonth') ]
-    lex_pattern = re.compile('^' r'(?P<neg>-?)' \
-                        '(?P<Y>\d{4,})-' r'(?P<M>\d\d)' \
-                        r'(?P<tz>Z|([-+]\d\d:\d\d))?' '$')
+    lex_pattern = re.compile(r'^(?P<neg>-?)' \
+                        r'(?P<Y>\d{4,})-(?P<M>\d\d)' \
+                        r'(?P<tz>Z|([-+]\d\d:\d\d))?$')
     tag, format = 'gYearMonth', '%(Y)04d-%(M)02dZ'
     type = (SCHEMA.XSD3, 'gYearMonth')
 
@@ -270,9 +270,9 @@ class gYear(Gregorian):
     '''A date.
     '''
     parselist = [ (None,'gYear') ]
-    lex_pattern = re.compile('^' r'(?P<neg>-?)' \
-                        '(?P<Y>\d{4,})' \
-                        r'(?P<tz>Z|([-+]\d\d:\d\d))?' '$')
+    lex_pattern = re.compile(r'^(?P<neg>-?)' \
+                        r'(?P<Y>\d{4,})' \
+                        r'(?P<tz>Z|([-+]\d\d:\d\d))?$')
     tag, format = 'gYear', '%(Y)04dZ'
     type = (SCHEMA.XSD3, 'gYear')
 

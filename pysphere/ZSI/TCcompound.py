@@ -18,7 +18,10 @@ from pysphere.ZSI.wstools.Namespaces import SOAP
 from pysphere.ZSI.wstools.logging import getLogger as _GetLogger
 import re
 from copy import copy as _copy
-import collections
+try:
+    from collections.abc import Callable
+except ImportError:
+    from collections import Callable
 
 _find_arrayoffset = lambda E: E.getAttributeNS(SOAP.ENC, "offset")
 _find_arrayposition = lambda E: E.getAttributeNS(SOAP.ENC, "position")
@@ -30,7 +33,7 @@ def _check_typecode_list(ofwhat, tcname):
     '''Check a list of typecodes for compliance with Struct
     requirements.'''
     for o in ofwhat:
-        if isinstance(o, collections.Callable): #skip if _Mirage
+        if isinstance(o, Callable): #skip if _Mirage
             continue
         if not isinstance(o, TypeCode):
             raise TypeError(

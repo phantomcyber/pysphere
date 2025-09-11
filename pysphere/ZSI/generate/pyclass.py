@@ -5,6 +5,10 @@
 
 import pydoc, sys, warnings
 from pysphere.ZSI import TC
+try:
+    from collections.abc import Callable
+except ImportError:
+    from collections import Callable
 import collections
 
 # If function.__name__ is read-only, fail
@@ -143,7 +147,7 @@ class pyclass_type(type):
         return type.__new__(cls,classname,bases,classdict)
 
     def __create_functions_from_what(what):
-        if not isinstance(what, collections.Callable):
+        if not isinstance(what, Callable):
             def get(self):
                 return getattr(self, what.aname)
     
@@ -172,7 +176,7 @@ class pyclass_type(type):
         # new factory function
         # if pyclass is None, skip
         # 
-        if not isinstance(what, collections.Callable) and getattr(what, 'pyclass', None) is None: 
+        if not isinstance(what, Callable) and getattr(what, 'pyclass', None) is None: 
             new_func = None
         elif (isinstance(what, TC.ComplexType) or 
             isinstance(what, TC.Array)):
@@ -182,7 +186,7 @@ class pyclass_type(type):
                 '''
                 return what.pyclass()
             
-        elif not isinstance(what, collections.Callable):
+        elif not isinstance(what, Callable):
             
             def new_func(self, value):
                 '''value -- initialize value

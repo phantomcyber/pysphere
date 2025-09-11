@@ -1,7 +1,7 @@
 import os
 import random
 import time
-import ConfigParser
+import configparser as ConfigParser
 from unittest import TestCase
 
 from pysphere import VIServer, VMPowerState, ToolsStatus
@@ -47,12 +47,12 @@ class VIVirtualMachineTest(TestCase):
         cls.server2.disconnect()
 
     def test_get_resource_pool_name(self):
-        for mor in self.server.get_resource_pools().iterkeys():
+        for mor in self.server.get_resource_pools().keys():
             vms = self.server.get_registered_vms(resource_pool=mor)
             if not vms:
                 continue
             path = random.choice(vms)
-            print "picked:", path
+            print("picked:", path)
             vm = self.server.get_vm_by_path(path)
             assert vm.get_resource_pool_name()
         
@@ -297,7 +297,7 @@ class VIVirtualMachineTest(TestCase):
     def get_random_vm(self):
         vms = self.server.get_registered_vms()
         path = random.choice(vms)
-        print "picked:", path
+        print("picked:", path)
         return self.server.get_vm_by_path(path)
     
     def start_vm_with_tools(self):
