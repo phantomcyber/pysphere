@@ -19,6 +19,10 @@ from pysphere.ZSI.wstools.logging import getLogger as _GetLogger
 from pysphere.ZSI.typeinterpreter import BaseTypeInterpreter
 from pysphere.ZSI.generate import WSISpec, WSInteropError, Wsdl2PythonError,\
     WsdlGeneratorError, WSDLFormatError
+try:
+    from collections.abc import Callable
+except ImportError:
+    from collections import Callable
 import collections
 
 ID1 = '    '
@@ -290,7 +294,7 @@ class ContainerBase:
         '''
         if self.func_aname is None:
             return name
-        assert isinstance(self.func_aname, collections.Callable), \
+        assert isinstance(self.func_aname, Callable), \
             'expecting callable method for attribute func_aname, not %s' %type(self.func_aname)
         f = self.func_aname
         return f(name)
@@ -1254,7 +1258,7 @@ class TypecodeContainerBase(TypesContainerBase):
         '''
         if self.func_aname is None:
             return name
-        assert isinstance(self.func_aname, collections.Callable), \
+        assert isinstance(self.func_aname, Callable), \
             'expecting callable method for attribute func_aname, not %s' %type(self.func_aname)
         f = self.func_aname
         return f(name)

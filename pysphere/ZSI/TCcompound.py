@@ -181,7 +181,7 @@ class ComplexType(TypeCode):
         for i,what in [ (i, self.ofwhat[i]) for i in range(len(self.ofwhat)) ]:
             
             # retrieve typecode if it is hidden
-            if isinstance(what, collections.Callable): what = what()
+            if isinstance(what, Callable): what = what()
             
             # Loop over all available kids
             if debug: 
@@ -366,7 +366,7 @@ class ComplexType(TypeCode):
             what = self.ofwhat[indx]
             
             # retrieve typecode if hidden
-            if isinstance(what, collections.Callable): what = what()
+            if isinstance(what, Callable): what = what()
             
             if debug:
                 self.logger.debug('serialize what -- %s', 
